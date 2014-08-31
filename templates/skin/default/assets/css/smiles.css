@@ -1,7 +1,7 @@
 .img-smiles{
 	width:auto;
 }
-.markItUp .smiles a {
+.markItUp .smiles a, .editor-smiles a, .editor-smiles a:hover {
 	background: none;
 }
 .editor-smiles{
@@ -15,6 +15,9 @@
 .smiles{
 	display: block;
 	border: 1px solid #dfe3e8;
+}
+.smiles a{
+	white-space: normal;
 }
 .smiles img{
 	margin: 5px 0 5px 5px;
