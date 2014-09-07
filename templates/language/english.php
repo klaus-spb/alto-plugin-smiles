@@ -8,7 +8,7 @@
  */
 
 return array(
-	'disable_smiles' => 'disable graphic smiles',
+	'disable_smiles' => 'Disable graphic smiles',
 );
 
 ?>
