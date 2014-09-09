@@ -2,7 +2,7 @@
     width: auto;
 }
 
-.markItUp .smiles a {
+.markItUp .smiles a, .editor-smiles > a, .editor-smiles > a:hover {
     background: none;
 }
 
