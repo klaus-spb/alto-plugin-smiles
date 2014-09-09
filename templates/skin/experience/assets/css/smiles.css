@@ -1,0 +1,42 @@
+.img-smiles {
+    width: auto;
+}
+
+.markItUp .smiles a {
+    background: none;
+}
+
+.editor-smiles {
+    background-image: url(../images/icon_smile.gif);
+    width: 16px;
+    height: 16px;
+}
+
+.smiles {
+    display: block;
+    border: 1px solid hsl(0, 0%, 78%) ;
+    border-bottom : 0;
+    background-color: white !important;
+    height: 100%;
+    white-space: normal;
+}
+
+.smiles.smiles-hide {
+    display: none;
+}
+
+.smiles a {
+    display: inline-block !important;
+}
+
+img[src*="common/plugins/smiles/images/"] {
+    width: auto !important;
+}
+
+.smiles.loading {
+    background-position: 50% 50% !important;
+}
+
+.smiles img {
+    margin: 5px 0 5px 5px;
+}
