@@ -70,7 +70,7 @@ ls.smiles = (function ($) {
                 .data({'smiles-smile': smile.list[0], 'smiles-textarea': textarea.attr('id')}).click(function (e) {
                     e.preventDefault();
                     $.markItUp({
-                        replaceWith: $(this).data('smiles-smile'),
+                        replaceWith: " " + $(this).data('smiles-smile'),
                         target: '#' + $(this).data('smiles-textarea')
                     });
                 });
