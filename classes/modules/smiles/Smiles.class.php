@@ -36,7 +36,7 @@ class PluginSmiles_ModuleSmiles extends Module{
 			$img_url = F::File_Dir2Url(Config::Get('plugin.smiles.smiles_dir').$img);
 			
 			foreach($texts as $text){
-				$smiles_preg[] = '/(\s|^)'.preg_quote($text, '/').'(\s|$)/';
+				$smiles_preg[] = '#(?<=\s|^)(' . preg_quote($text, '/') .')(?=\s|$)#';
 				$smiles_masked = htmlspecialchars(trim($text), ENT_QUOTES);
 				$smiles_text[] = ' <img src="'. $img_url. '"  alt="'. $smiles_masked. '" title="'. $smiles_masked. '"/> ';
 			}
