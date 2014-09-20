@@ -38,19 +38,19 @@ ls.smiles = (function ($) {
             return list;
         }
         list = $('<div class="smiles smiles-hide"/>')
-            .css({'background': 'url(' + this.options.loader + ') no-repeat center top', 'min-height': 70})
+            .css({'background': 'url(' + this.options.loader + ') no-repeat center center', 'min-height': 70})
             .attr('id', lid)
             .insertBefore(textarea)
         ;
-        var listWrap = $('<div/>').width(textarea.outerWidth()).insertBefore(textarea);
+        var listWrap = $('<div/>').width('100%').insertBefore(textarea);
 
-        listWrap.width(textarea.outerWidth());
+        listWrap.width('100%');
 
         if (!this.options.smiles) {
             ls.ajax(aRouter['ajax'] + 'get/smiles/', {security_ls_key: ALTO_SECURITY_KEY}, function (result) {
                 if (result) {
                     this.options.smiles = result.aSmiles;
-                    list.css({'background': 'none', 'height': 'auto', 'min-height': 0});
+                    list.css({'background': 'none', 'height': '100%', 'min-height': 0});
                     this.Smiles(textarea, list);
                 }
 
