@@ -40,3 +40,6 @@ img[src*="common/plugins/smiles/images/"] {
 .smiles img {
     margin: 5px 0 5px 5px;
 }
+.mce-i-smiles:before {
+content: "\e021";
+}

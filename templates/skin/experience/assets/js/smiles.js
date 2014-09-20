@@ -7,9 +7,9 @@ ls.smiles = (function ($) {
         smiles: null,
         loader: DIR_STATIC_SKIN + 'assets/images/loader.gif',
     };
-	
-    this.initMarkitup = function(settings) {
-	
+
+    this.initMarkitup = function (settings) {
+
         if (!settings || !settings.markupSet) {
             return;
         }
@@ -26,8 +26,8 @@ ls.smiles = (function ($) {
     };
 
     this.toggle = function (el) {
-		this.SmilesList(el);
-		$('#smiles_list_' + $(el).attr('id')).toggleClass('smiles-hide');
+        this.SmilesList(el);
+        $('#smiles_list_' + $(el).attr('id')).toggleClass('smiles-hide');
     };
 
     this.SmilesList = function (el) {
@@ -38,19 +38,19 @@ ls.smiles = (function ($) {
             return list;
         }
         list = $('<div class="smiles smiles-hide"/>')
-            .css({'background': 'url(' + this.options.loader + ') no-repeat center center', 'min-height': 70})
+            .css({'background': 'url(' + this.options.loader + ') no-repeat center top', 'min-height': 70})
             .attr('id', lid)
             .insertBefore(textarea)
         ;
-        var listWrap = $('<div/>').width('100%').insertBefore(textarea);
+        var listWrap = $('<div/>').width(textarea.outerWidth()).insertBefore(textarea);
 
-        listWrap.width('100%');
+        listWrap.width(textarea.outerWidth());
 
         if (!this.options.smiles) {
             ls.ajax(aRouter['ajax'] + 'get/smiles/', {security_ls_key: ALTO_SECURITY_KEY}, function (result) {
                 if (result) {
                     this.options.smiles = result.aSmiles;
-                    list.css({'background': 'none', 'height': '100%', 'min-height': 0});
+                    list.css({'background': 'none', 'height': 'auto', 'min-height': 0});
                     this.Smiles(textarea, list);
                 }
 
@@ -78,16 +78,69 @@ ls.smiles = (function ($) {
             list.append(button);
         });
     };
+
+    var SmilesList = null;
+
+    this.getHtmlList = function () {
+        ls.ajax(aRouter['ajax'] + 'get/smiles/', {security_ls_key: ALTO_SECURITY_KEY, async: false}, function (result) {
+            if (result) {
+                sTextSmiles = '';
+                $.each(result.aSmiles, function (index, smile) {
+                    if (index % 7 == 0) sTextSmiles += '</tr>';
+                    if (index == 0 || (index % 7 == 0)) sTextSmiles += '<tr>';
+                    sTextSmiles += '<td><a href="#" data-mce-url="' + smile.src + '" data-mce-alt="' + smile.list.join(', ') + '" tabindex="-1" role="option" aria-label="' + smile.list.join(', ') + '"><img src="' + smile.src + '"  role="presentation" /></a></td>';
+                    if (index == result.aSmiles.length) sTextSmiles += '</tr>';
+                });
+                $('#SmilesTable tbody').append(sTextSmiles);
+            }
+        }.bind(this))
+        sText = '<div style="width:310px;height:200px;"><table role="list" class="mce-grid" id="SmilesTable"><tbody>';
+        sText += "</tbody></table></div>"
+
+        return sText;
+
+    }
+
+    this.mceCheck = function () {
+	
+        tinymce.PluginManager.add("smiles", function (t, e) {
+            t.addButton("smiles", {
+                type: "panelbutton",
+                panel: {
+                    role: "application",
+                    autohide: !0,
+                    html: this.getHtmlList,
+                    onclick: function (e) {
+                        var a = t.dom.getParent(e.target, "a");
+                        a && (t.insertContent('<img src="' + a.getAttribute("data-mce-url") + '" alt="' + a.getAttribute("data-mce-alt") + '" />'), this.hide())
+                    }
+                },
+                tooltip: "smiles"
+            })
+        }.bind(this));
+		
+        ls.settings.presets.tinymce.default.plugins += ' smiles';
+        ls.settings.presets.tinymce.default.toolbar += ' | smiles';
+		
+        ls.settings.presets.tinymce.comment.plugins += ' smiles';
+        ls.settings.presets.tinymce.comment.toolbar += ' | smiles';
+    };
+
+
     return this;
 }).call(ls.smiles || {}, jQuery);
 
 
 jQuery(function ($) {
 
-    if (typeof $.fn.markItUp == 'function') {
-        ls.hook.inject([jQuery.fn, 'markItUp'], function (settings, extraSettings) {
-            ls.smiles.initMarkitup(settings || {markupSet: []});
-        });
+    if (!ls.cfg.wysiwyg) {
+        if (typeof $.fn.markItUp == 'function') {
+            ls.hook.inject([jQuery.fn, 'markItUp'], function (settings, extraSettings) {
+                ls.smiles.initMarkitup(settings || {markupSet: []});
+            });
+        }
+    } else {
+        ls.smiles.mceCheck();
     }
 
     ls.hook.inject([ls.tools, 'textPreview'], function (textId, save, divPreview) {
