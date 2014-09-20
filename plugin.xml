@@ -9,7 +9,7 @@
 		<lang name="russian">Klaus</lang>
 	</author>
 	<homepage>http://altocms.ru</homepage>
-	<version>0.5.0</version>
+	<version>0.5.3</version>
 	<dirname>smiles</dirname>
     <requires>
         <alto>
