@@ -119,11 +119,15 @@ ls.smiles = (function ($) {
             })
         }.bind(this));
 		
-        ls.settings.presets.tinymce.default.plugins += ' smiles';
-        ls.settings.presets.tinymce.default.toolbar += ' | smiles';
-		
-        ls.settings.presets.tinymce.comment.plugins += ' smiles';
-        ls.settings.presets.tinymce.comment.toolbar += ' | smiles';
+	var p = ls.settings.presets.tinymce['default']();
+	p.plugins = p.plugins + ' smiles';
+	p.toolbar = p.toolbar + ' | smiles';
+	ls.settings.presets.tinymce['default'] = function() { return p; };
+	
+	var p = ls.settings.presets.tinymce['comment']();
+	p.plugins = p.plugins + ' smiles';
+	p.toolbar = p.toolbar + ' | smiles';
+	ls.settings.presets.tinymce['comment'] = function() { return p; };
     };
 
 
