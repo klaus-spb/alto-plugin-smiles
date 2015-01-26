@@ -120,14 +120,18 @@ ls.smiles = (function ($) {
         }.bind(this));
 		
 	var p = ls.settings.presets.tinymce['default']();
-	p.plugins = p.plugins + ' smiles';
-	p.toolbar = p.toolbar + ' | smiles';
-	ls.settings.presets.tinymce['default'] = function() { return p; };
+	if(p.plugins.indexOf('smiles') == -1){
+		p.plugins = p.plugins + ' smiles';
+		p.toolbar = p.toolbar + ' | smiles';
+		ls.settings.presets.tinymce['default'] = function() { return p; };
+	}
 	
 	var p = ls.settings.presets.tinymce['comment']();
-	p.plugins = p.plugins + ' smiles';
-	p.toolbar = p.toolbar + ' | smiles';
-	ls.settings.presets.tinymce['comment'] = function() { return p; };
+	if(p.plugins.indexOf('smiles') == -1){
+		p.plugins = p.plugins + ' smiles';
+		p.toolbar = p.toolbar + ' | smiles';
+		ls.settings.presets.tinymce['comment'] = function() { return p; };	
+	}
     };
 
 
